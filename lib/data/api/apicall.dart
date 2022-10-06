@@ -1,27 +1,28 @@
-mport 'dart:convert';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:news_app/data/models/models.dart';
-import 'package:news_app/interface/widgets/widgets.dart';
+import 'package:weatherapp/data/model/model.dart';
+import 'package:weatherapp/utils/widgets/toast.dart';
 
 class ApiCall {
   var url;
-  Map<String, String> headers;
 
-  ApiCall({required this.url, required this.headers});
+  ApiCall({
+    required this.url,
+  });
 
-  Future getNewsData() async {
+  Future getWeather() async {
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: headers);
+      http.Response response = await http.get(Uri.parse(url));
       switch (response.statusCode) {
         case 200:
           Map<String, dynamic> responseDecode =
               jsonDecode(response.body.toString());
-          List<dynamic> body = responseDecode['articles'];
-          List<NewsModel> articles =
-              body.map((dynamic item) => NewsModel.fromJson(item)).toList();
-          return articles;
+          List<dynamic> body = responseDecode["list"];
+          List<WeatherModel> weather =
+              body.map((dynamic item) => WeatherModel.fromJson(item)).toList();
+          return weather;
         case 400:
           throw showToasterror("The request to the server is unacceptable");
         case 403:

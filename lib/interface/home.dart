@@ -1,10 +1,20 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:weatherapp/data/api/location.dart';
+import 'package:weatherapp/data/model/icon_model.dart';
+import 'package:weatherapp/data/model/model.dart';
+import 'package:weatherapp/data/repository/repository.dart';
+import 'package:weatherapp/logic/bloc/weather_bloc_bloc.dart';
+import 'package:weatherapp/utils/widgets/toast.dart';
 
 import '../utils/widgets/temerature_card.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key});
+  const Home({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -141,42 +151,116 @@ class Home extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Container(
-              height: 110,
-              width: 70,
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: const Color(0xafffffff),
-                borderRadius: BorderRadius.circular(30),
+            Expanded(child: const HourlyView())
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class HourlyView extends StatelessWidget {
+  const HourlyView({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<WeatherBlocBloc>(
+      create: (context) =>
+          WeatherBlocBloc(RepositoryProvider.of<WeatherRepository>(context))
+            ..add(FetchLocation()),
+      child: BlocConsumer<WeatherBlocBloc, WeatherBlocState>(
+        listener: (context, state) {
+          if (state is WeatherBlocInitial) {
+            const Center(child: Text('Waiting'));
+          }
+        },
+        builder: (context, state) {
+          if (state is ErrorState) {
+            return showToasterror(state.message);
+          } else if (state is LoadedState) {
+            return FutureBuilder<List<WeatherModel>>(
+              future: state.repository,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  List<WeatherModel> weather = snapshot.data!;
+                  return ListView.builder(
+                    itemCount: weather.length,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return HourlyCard(
+                        weather: weather[index],
+                      );
+                    },
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            );
+          } else if (state is LoadingState) {
+            return const Center(
+              child: CircularProgressIndicator.adaptive(
+                backgroundColor: Colors.black,
               ),
-              child: Column(
-                children: [
-                  const Text(
-                    'now',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 17,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  SvgPicture.asset(
-                    'assets/images/cloudy.svg',
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Text(
-                    '19',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 17,
-                    ),
-                  ),
-                ],
+            );
+          }
+          return const Center(
+            child: CircularProgressIndicator.adaptive(),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class HourlyCard extends StatelessWidget {
+  final WeatherModel? weather;
+
+  const HourlyCard({Key? key, required this.weather}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var iconmodel = IconModel();
+    var condition = weather!.weather![0].id;
+    String weathericon = iconmodel.getIcon(condition);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
+      child: Container(
+        height: 110,
+        width: 70,
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: const Color(0xafffffff),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: Column(
+          children: [
+            const Text(
+              'now',
+              style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 17,
               ),
-            )
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              "$weathericon ",
+              style: const TextStyle(fontSize: 20, color: Colors.white),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              '${weather!.main!.temp!.toInt()} °',
+              style: const TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 17,
+              ),
+            ),
           ],
         ),
       ),

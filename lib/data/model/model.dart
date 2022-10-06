@@ -1,46 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:json_annotation/json_annotation.dart';
+part 'model.g.dart';
 
-// To parse this JSON data, do
-//
-//     final welcome = welcomeFromJson(jsonString);
-
-import 'dart:convert';
-
-Welcome welcomeFromJson(String str) => Welcome.fromJson(json.decode(str));
-
-class Welcome {
-  Welcome({
-    this.list,
-    this.city,
-  });
-
-  List<ListElement>? list;
-  City? city;
-
-  factory Welcome.fromJson(Map<String, dynamic> json) => Welcome(
-        list: List<ListElement>.from(
-            json["list"].map((x) => ListElement.fromJson(x))),
-        city: City.fromJson(json["city"]),
-      );
-}
-
-class City {
-  City({
-    this.name,
-    this.country,
-  });
-
-  String? name;
-  String? country;
-
-  factory City.fromJson(Map<String, dynamic> json) => City(
-        name: json["name"],
-        country: json["country"],
-      );
-}
-
-class ListElement {
-  ListElement({
+@JsonSerializable(createToJson: false)
+class WeatherModel {
+  WeatherModel({
     this.main,
     this.weather,
     this.dtTxt,
@@ -50,12 +13,8 @@ class ListElement {
   List<Weather>? weather;
   DateTime? dtTxt;
 
-  factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
-        main: Main.fromJson(json["main"]),
-        weather:
-            List<Weather>.from(json["weather"].map((x) => Weather.fromJson(x))),
-        dtTxt: DateTime.parse(json["dt_txt"]),
-      );
+  factory WeatherModel.fromJson(Map<String, dynamic> json) =>
+      _$WeatherModelFromJson(json);
 }
 
 class Main {
@@ -78,6 +37,6 @@ class Weather {
   int? id;
 
   factory Weather.fromJson(Map<String, dynamic> json) => Weather(
-        id: json["id"],
+        id: json["id"] == null ? null : json["id"] as int,
       );
 }
