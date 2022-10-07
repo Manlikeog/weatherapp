@@ -13,7 +13,7 @@ WeatherModel _$WeatherModelFromJson(Map<String, dynamic> json) => WeatherModel(
       weather: (json['weather'] as List<dynamic>?)
           ?.map((e) => Weather.fromJson(e as Map<String, dynamic>))
           .toList(),
-      dtTxt: json['dtTxt'] == null
+      dtTxt: json['dt_txt'] == null
           ? null
-          : DateTime.parse(json['dtTxt'] as String),
+          : DateTime.parse(json['dt_txt'] as String),
     );

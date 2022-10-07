@@ -2,7 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:weatherapp/data/api/location.dart';
+import 'package:intl/intl.dart';
+
 import 'package:weatherapp/data/model/icon_model.dart';
 import 'package:weatherapp/data/model/model.dart';
 import 'package:weatherapp/data/repository/repository.dart';
@@ -186,7 +187,7 @@ class HourlyView extends StatelessWidget {
                 if (snapshot.hasData) {
                   List<WeatherModel> weather = snapshot.data!;
                   return ListView.builder(
-                    itemCount: weather.length,
+                    itemCount: 10,
                     physics: const AlwaysScrollableScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
@@ -224,6 +225,9 @@ class HourlyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     var iconmodel = IconModel();
     var condition = weather!.weather![0].id;
+    var strDate = weather!.dtTxt;
+    DateFormat dateFormat = DateFormat('h:mm');
+    String stringFormat = dateFormat.format(strDate as DateTime);
     String weathericon = iconmodel.getIcon(condition);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
@@ -232,24 +236,27 @@ class HourlyCard extends StatelessWidget {
         width: 70,
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: const Color(0xafffffff),
+          color: const Color(0x4fffffff),
           borderRadius: BorderRadius.circular(30),
         ),
         child: Column(
           children: [
-            const Text(
-              'now',
+            Text(
+              stringFormat,
               style: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: 17,
-              ),
+                  fontWeight: FontWeight.w600,
+                  fontSize: 17,
+                  color: Color(0xff9C9EAA)),
             ),
             const SizedBox(
               height: 10,
             ),
             Text(
               "$weathericon ",
-              style: const TextStyle(fontSize: 20, color: Colors.white),
+              style: const TextStyle(
+                fontSize: 20,
+                color: Colors.white,
+              ),
             ),
             const SizedBox(
               height: 10,

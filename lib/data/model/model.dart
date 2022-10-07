@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'model.g.dart';
 
@@ -10,6 +11,7 @@ class WeatherModel {
   });
 
   Main? main;
+
   List<Weather>? weather;
   DateTime? dtTxt;
 
