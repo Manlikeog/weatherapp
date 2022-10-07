@@ -13,15 +13,22 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (_) => WeatherRepository(),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(
+          create: (_) => WeatherRepository(),
+        ),
+        RepositoryProvider(
+          create: (context) => SubjectRepository(),
+        ),
+      ],
       child: MaterialApp(
           title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: const Home()),
+          home: Home()),
     );
   }
 }
