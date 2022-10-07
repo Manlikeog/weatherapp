@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 
 import 'package:weatherapp/data/model/icon_model.dart';
 import 'package:weatherapp/data/model/model.dart';
+import 'package:weatherapp/data/model/today_model.dart';
 import 'package:weatherapp/data/repository/repository.dart';
 import 'package:weatherapp/logic/bloc/weather_bloc_bloc.dart';
 import 'package:weatherapp/utils/widgets/toast.dart';
@@ -13,7 +14,8 @@ import 'package:weatherapp/utils/widgets/toast.dart';
 import '../utils/widgets/temerature_card.dart';
 
 class Home extends StatelessWidget {
-  const Home({
+  TodayModel? lol;
+  Home({
     super.key,
   });
 
@@ -56,8 +58,8 @@ class Home extends StatelessWidget {
             const SizedBox(
               height: 40,
             ),
-            const Text(
-              'Stockholm,\nSweden',
+            Text(
+              'Stockholm\nSweden',
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 35,
