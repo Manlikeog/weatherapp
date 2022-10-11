@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:weatherapp/data/model/model.dart';
+import 'package:weatherapp/data/model/today_model.dart';
 import 'package:weatherapp/utils/widgets/toast.dart';
 
 class TodayApiCall {
@@ -19,8 +20,7 @@ class TodayApiCall {
         case 200:
           Map<String, dynamic> responseDecode = jsonDecode(response.body);
 
-          WeatherModel weather = WeatherModel.fromJson(responseDecode);
-
+          TodayModel weather = TodayModel.fromJson(responseDecode);
           return weather;
         case 400:
           throw showToasterror("The request to the server is unacceptable");

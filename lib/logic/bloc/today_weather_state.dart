@@ -9,12 +9,14 @@ abstract class TodayWeatherState extends Equatable {
 
 class TodayWeatherInitial extends TodayWeatherState {}
 
-class LoadedState extends TodayWeatherState {
-  final Future<List<TodayModel>> repository;
-  const LoadedState(this.repository);
+class TodayLoadingState extends TodayWeatherState {}
+
+class TodayLoadedState extends TodayWeatherState {
+  final Future<TodayModel> repository;
+  const TodayLoadedState(this.repository);
 }
 
-class ErrorState extends TodayWeatherState {
+class TodayErrorState extends TodayWeatherState {
   final String message;
-  const ErrorState(this.message);
+  const TodayErrorState(this.message);
 }

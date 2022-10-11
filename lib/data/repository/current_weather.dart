@@ -19,7 +19,7 @@ class TodayWeather {
       print(location.long);
     }
     String url =
-        "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&appid=00487c361e6542bb23d52913eb9bf31c&units=metric";
+        "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&appid=8a15ac7ec71b09edaf840980a56dcf97&units=metric";
     TodayApiCall category = TodayApiCall(
       url: url,
     );

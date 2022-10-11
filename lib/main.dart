@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weatherapp/data/repository/current_weather.dart';
 import 'package:weatherapp/data/repository/repository.dart';
 import 'package:weatherapp/interface/home.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
           create: (_) => WeatherRepository(),
         ),
         RepositoryProvider(
-          create: (context) => SubjectRepository(),
+          create: (context) => TodayWeather(),
         ),
       ],
       child: MaterialApp(
