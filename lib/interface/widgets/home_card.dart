@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:weatherapp/data/model/today_model.dart';
 
 import '../../utils/widgets/temerature_card.dart';
-
+import '../../data/model/models.dart';
 import 'widget.dart';
 
 class HomeCard extends StatelessWidget {
@@ -14,6 +14,9 @@ class HomeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var iconmodel = IconModel();
+    var condition = todayWeather!.weather![0].id;
+    String weathericon = iconmodel.getIcon(condition);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -28,6 +31,7 @@ class HomeCard extends StatelessWidget {
         Temperature(
           temp: todayWeather!.main!.temp,
           weatherName: todayWeather!.weather![0].main,
+          weatherIcon: weathericon,
         ),
         Column(
           children: [

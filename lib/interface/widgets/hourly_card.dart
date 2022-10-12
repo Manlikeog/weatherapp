@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../data/model/icon_model.dart';
-import '../../data/model/model.dart';
+import '../../data/model/models.dart';
 
 class HourlyCard extends StatelessWidget {
   final WeatherModel? weather;

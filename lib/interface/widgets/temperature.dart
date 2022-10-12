@@ -3,7 +3,13 @@ import 'package:flutter/material.dart';
 class Temperature extends StatelessWidget {
   final double? temp;
   final String? weatherName;
-  const Temperature({Key? key, this.temp, this.weatherName}) : super(key: key);
+  final String? weatherIcon;
+  const Temperature({
+    Key? key,
+    this.temp,
+    this.weatherName,
+    this.weatherIcon,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
