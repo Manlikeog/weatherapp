@@ -23,19 +23,19 @@ class IconModel {
 class TodayIconModel {
   String getIcon(int? condition) {
     if (condition! < 300) {
-      return '🌩';
+      return 'assets/images/thunderstorm.png';
     } else if (condition < 400) {
-      return '🌧';
+      return 'assets/images/drizzle.png';
     } else if (condition < 600) {
-      return '☔️';
+      return 'assets/images/rain.png';
     } else if (condition < 700) {
-      return '☃️';
+      return 'assets/images/snow.png';
     } else if (condition < 800) {
-      return '🌫';
+      return 'assets/images/atmosphere.png';
     } else if (condition == 800) {
-      return '☀️';
+      return 'assets/images/sunny.png';
     } else if (condition <= 804) {
-      return '☁️';
+      return 'assets/images/clouds.png';
     } else {
       return 'weather is unavailable';
     }

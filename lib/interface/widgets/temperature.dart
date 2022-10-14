@@ -16,7 +16,7 @@ class Temperature extends StatelessWidget {
     return Row(
       children: [
         Image.asset(
-          'assets/images/cludy.png',
+          weatherIcon!,
           height: 200,
         ),
         Column(

@@ -14,7 +14,7 @@ class HomeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var iconmodel = IconModel();
+    var iconmodel = TodayIconModel();
     var condition = todayWeather!.weather![0].id;
     String weathericon = iconmodel.getIcon(condition);
     return Column(

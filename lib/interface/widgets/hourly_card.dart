@@ -16,6 +16,7 @@ class HourlyCard extends StatelessWidget {
     DateFormat dateFormat = DateFormat('h:mm');
     String stringFormat = dateFormat.format(strDate as DateTime);
     String weathericon = iconmodel.getIcon(condition);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
       child: Container(
